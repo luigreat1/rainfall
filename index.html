@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Как образуются дождь, снег и град — Слайды с Луи (16:9)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Oswald и Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,600;0,700;0,800;0,900;1,700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            /* Яркий солнечный небесно-голубой фон вокруг сцены 16:9 */
+            background: radial-gradient(circle at 50% 15%, #BAE6FD 0%, #7DD3FC 45%, #38BDF8 100%);
+            color: #0F172A;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        .font-oswald {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.02em;
+        }
+
+        /* Строгий контейнер формата 16:9, вписывающийся в любой экран без скроллбаров */
+        .stage-16-9 {
+            width: min(97vw, calc(96vh * 16 / 9));
+            height: min(96vh, calc(97vw * 9 / 16));
+            aspect-ratio: 16 / 9;
+            background: #FFFFFF;
+            border-radius: 1.75rem;
+            box-shadow:
+                0 25px 50px -12px rgba(3, 105, 161, 0.38),
+                0 0 0 4px rgba(255, 255, 255, 0.85),
+                0 0 0 7px rgba(14, 165, 233, 0.35);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Анимации персонажа Луи */
+        @keyframes louieFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(1.5deg); }
+        }
+        .louie-float {
+            animation: louieFloat 3.2s ease-in-out infinite;
+        }
+
+        @keyframes louieBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            30% { transform: translateY(-14px) scale(1.06, 0.94); }
+            60% { transform: translateY(0) scale(0.96, 1.04); }
+        }
+        .louie-bounce {
+            animation: louieBounce 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes eyeBlink {
+            0%, 92%, 100% { transform: scaleY(1); }
+            96% { transform: scaleY(0.1); }
+        }
+        .louie-pupil {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: eyeBlink 4.2s infinite;
+        }
+
+        /* Погодные SVG-анимации */
+        @keyframes riseVapor {
+            0% { transform: translateY(24px) scale(0.8); opacity: 0; }
+            25% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-68px) scale(1.15); opacity: 0; }
+        }
+        .anim-vapor-1 { animation: riseVapor 2.4s ease-in-out infinite; }
+        .anim-vapor-2 { animation: riseVapor 2.4s ease-in-out 0.8s infinite; }
+        .anim-vapor-3 { animation: riseVapor 2.4s ease-in-out 1.6s infinite; }
+
+        @keyframes convectionArrow {
+            0% { transform: translateY(14px); opacity: 0.25; }
+            50% { transform: translateY(-8px); opacity: 1; }
+            100% { transform: translateY(-24px); opacity: 0.25; }
+        }
+        .anim-convection { animation: convectionArrow 1.8s ease-in-out infinite; }
+        .anim-convection-fast { animation: convectionArrow 1.0s ease-in-out infinite; }
+
+        @keyframes pulseScale {
+            0%, 100% { transform: scale(0.92); }
+            50% { transform: scale(1.12); }
+        }
+        .anim-pulse {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: pulseScale 1.9s ease-in-out infinite;
+        }
+
+        @keyframes rainDrop {
+            0% { transform: translateY(-10px); opacity: 0; }
+            15% { opacity: 1; }
+            88% { opacity: 1; }
+            100% { transform: translateY(155px); opacity: 0; }
+        }
+        .anim-rain-1 { animation: rainDrop 1.05s linear infinite; }
+        .anim-rain-2 { animation: rainDrop 1.05s linear 0.35s infinite; }
+        .anim-rain-3 { animation: rainDrop 1.05s linear 0.7s infinite; }
+
+        @keyframes rippleRing {
+            0% { transform: scale(0.35); opacity: 0.95; }
+            100% { transform: scale(1.9); opacity: 0; }
+        }
+        .anim-ripple {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: rippleRing 1.3s ease-out infinite;
+        }
+
+        @keyframes snowSwirl {
+            0% { transform: translate(0, -10px) rotate(0deg); opacity: 0; }
+            15% { opacity: 1; }
+            50% { transform: translate(14px, 75px) rotate(90deg); opacity: 1; }
+            88% { opacity: 1; }
+            100% { transform: translate(-10px, 155px) rotate(180deg); opacity: 0; }
+        }
+        .anim-snow-1 { animation: snowSwirl 3.0s ease-in-out infinite; }
+        .anim-snow-2 { animation: snowSwirl 3.3s ease-in-out 1.0s infinite; }
+        .anim-snow-3 { animation: snowSwirl 2.9s ease-in-out 2.0s infinite; }
+
+        @keyframes hailOrbit {
+            0% { transform: translate(0, 24px) scale(0.65); }
+            25% { transform: translate(-34px, -16px) scale(0.85); }
+            50% { transform: translate(0, -34px) scale(1.05); }
+            75% { transform: translate(34px, -14px) scale(1.25); }
+            100% { transform: translate(0, 24px) scale(0.65); }
+        }
+        .anim-hail-orbit-1 {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: hailOrbit 2.2s linear infinite;
+        }
+        .anim-hail-orbit-2 {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: hailOrbit 2.2s linear -1.1s infinite;
+        }
+
+        @keyframes hailFall {
+            0% { transform: translateY(-10px); opacity: 0; }
+            12% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(155px); opacity: 0; }
+        }
+        .anim-hail-1 { animation: hailFall 0.8s cubic-bezier(0.55, 0.05, 0.68, 0.19) infinite; }
+        .anim-hail-2 { animation: hailFall 0.8s cubic-bezier(0.55, 0.05, 0.68, 0.19) 0.26s infinite; }
+        .anim-hail-3 { animation: hailFall 0.8s cubic-bezier(0.55, 0.05, 0.68, 0.19) 0.52s infinite; }
+
+        @keyframes sunRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .anim-sun {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: sunRotate 22s linear infinite;
+        }
+
+        @keyframes lightningFlash {
+            0%, 88%, 100% { opacity: 0.25; }
+            91%, 95% { opacity: 1; }
+        }
+        .anim-lightning {
+            animation: lightningFlash 3.2s infinite;
+        }
+
+        /* Компактный скролл только для узких экранов */
+        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #F1F5F9; border-radius: 99px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #38BDF8; border-radius: 99px; }
+		        @keyframes louieJump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .louie-jump {
+            animation: louieJump 1.2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ГЛАВНАЯ ШИРОКОФОРМАТНАЯ СЦЕНА 16:9 -->
+    <div class="stage-16-9">
+
+        <!-- 1. ВЕРХНЯЯ ПАНЕЛЬ НАВИГАЦИИ И ЗАГОЛОВКА (компактная, яркая, встроенная в 16:9) -->
+        <header id="top-header" class="px-5 py-2.5 bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 text-white flex items-center justify-between gap-3 shrink-0 shadow-md z-20">
+            <!-- Логотип и название урока -->
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm border border-white/40 flex items-center justify-center text-2xl shrink-0 shadow-inner">
+                    🌦️
+                </div>
+                <div class="min-w-0">
+                    <div class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-sky-100">
+                        <span>Природоведение • 5 класс</span>
+                        <span>•</span>
+                        <span>Как устроено облако и виды осадков</span>
+                    </div>
+                    <h1 class="font-oswald text-lg sm:text-xl lg:text-2xl font-bold uppercase tracking-wide truncate leading-tight">
+                        Как образуются дождь, снег и град
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Быстрые вкладки-переключатели слайдов -->
+            <nav aria-label="Слайды презентации" class="flex items-center gap-1.5 sm:gap-2 bg-slate-900/20 p-1 rounded-2xl border border-white/20 shrink-0">
+                <button onclick="goToSlide(0)" id="nav-tab-0" class="font-oswald text-xs sm:text-sm lg:text-base font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5">
+                    <span>💧</span><span>1. Дождь</span>
+                </button>
+                <button onclick="goToSlide(1)" id="nav-tab-1" class="font-oswald text-xs sm:text-sm lg:text-base font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5">
+                    <span>❄️</span><span>2. Снег</span>
+                </button>
+                <button onclick="goToSlide(2)" id="nav-tab-2" class="font-oswald text-xs sm:text-sm lg:text-base font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5">
+                    <span>🧊</span><span>3. Град</span>
+                </button>
+                <button onclick="goToSlide(3)" id="nav-tab-3" class="font-oswald text-xs sm:text-sm lg:text-base font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5">
+                    <span>🏆</span><span>4. Итог и тест</span>
+                </button>
+            </nav>
+
+            <!-- Кнопки переключения слайдов стрелками -->
+            <div class="hidden xl:flex items-center gap-1.5 shrink-0">
+                <button onclick="changeSlide(-1)" id="header-prev-slide" class="w-9 h-9 rounded-xl bg-white/15 hover:bg-white/25 disabled:opacity-35 disabled:pointer-events-none flex items-center justify-center font-bold text-lg transition-all cursor-pointer" title="Предыдущий слайд (←)">
+                    ‹
+                </button>
+                <span id="slide-counter-badge" class="font-oswald text-sm font-bold px-2.5 py-1 rounded-lg bg-white/15">
+                    1 / 4
+                </span>
+                <button onclick="changeSlide(1)" id="header-next-slide" class="w-9 h-9 rounded-xl bg-white/15 hover:bg-white/25 disabled:opacity-35 disabled:pointer-events-none flex items-center justify-center font-bold text-lg transition-all cursor-pointer" title="Следующий слайд (→)">
+                    ›
+                </button>
+            </div>
+        </header>
+
+        <!-- 2. ОСНОВНАЯ РАБОЧАЯ ОБЛАСТЬ СЛАЙДА (занимает всё оставшееся пространство 16:9) -->
+        <main id="slide-workspace" class="flex-1 min-h-0 grid grid-cols-12 gap-0 bg-slate-50/60">
+            
+            <!-- ЛЕВАЯ КОЛОНКА (7 из 12): Вводная плашка + Чёткая SVG-сцена + Кнопки шагов -->
+            <section class="col-span-7 p-4 lg:p-5 flex flex-col justify-between border-r border-slate-200/90 bg-gradient-to-b from-sky-50/70 to-white min-h-0">
+                
+                <!-- Верхняя плашка определения облака и статуса шага -->
+                <div id="scenario-subheader" class="rounded-2xl px-4 py-2.5 border-2 flex items-center justify-between gap-3 shadow-sm shrink-0 transition-colors duration-300">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <span id="scenario-pill-badge" class="px-2.5 py-0.5 rounded-lg font-oswald text-xs font-bold uppercase tracking-wider text-white shrink-0">
+                            Сценарий 1
+                        </span>
+                        <p class="text-xs sm:text-sm font-bold text-slate-700 truncate">
+                            <span class="text-sky-700 font-extrabold">Облака</span> — это скопления мельчайших капелек воды и кристалликов льда.
+                        </p>
+                    </div>
+                    <div id="step-badge-right" class="font-oswald text-xs sm:text-sm font-bold px-3 py-1 rounded-xl shrink-0">
+                        Шаг 1 из 3
+                    </div>
+                </div>
+
+                <!-- Контейнер высокодетализированной SVG-анимации -->
+                <div class="my-2.5 flex-1 min-h-0 w-full flex items-center justify-center">
+                    <div class="w-full h-full max-h-full aspect-[16/10] rounded-2xl overflow-hidden shadow-lg border-[3px] border-white ring-2 ring-sky-200 relative bg-sky-100">
+                        <svg id="scene-svg" viewBox="0 0 640 400" class="w-full h-full block" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Динамическая графика сценария -->
+                        </svg>
+
+                        <!-- Плашка температуры поверх угла сцены -->
+                        <div id="temp-pill" class="absolute top-3 left-3 bg-white/95 backdrop-blur-md border-2 border-sky-200 rounded-xl px-3 py-1 shadow-md flex items-center gap-2 text-xs sm:text-sm font-extrabold text-slate-800">
+                            <span id="temp-emoji" class="text-base">☀️</span>
+                            <span id="temp-label">Температура: выше 0 °C (тепло)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Нижняя панель выбора шагов 1 — 2 — 3 -->
+                <div class="grid grid-cols-3 gap-2.5 shrink-0">
+                    <button onclick="setStep(1)" id="step-btn-1" class="py-2 px-3 rounded-xl font-oswald text-sm lg:text-base font-bold border-2 transition-all cursor-pointer flex items-center justify-center gap-2">
+                        <span>1. Конвекция и начало</span>
+                    </button>
+                    <button onclick="setStep(2)" id="step-btn-2" class="py-2 px-3 rounded-xl font-oswald text-sm lg:text-base font-bold border-2 transition-all cursor-pointer flex items-center justify-center gap-2">
+                        <span>2. Рост в облаке</span>
+                    </button>
+                    <button onclick="setStep(3)" id="step-btn-3" class="py-2 px-3 rounded-xl font-oswald text-sm lg:text-base font-bold border-2 transition-all cursor-pointer flex items-center justify-center gap-2">
+                        <span>3. Выпадение осадков</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- ПРАВАЯ КОЛОНКА (5 из 12): Пошаговые карточки + Главный вывод + Объёмный Луи + Кнопки шагов -->
+            <section class="col-span-5 p-4 lg:p-5 flex flex-col justify-between bg-white min-h-0">
+                
+                <!-- Карточки 3 шагов -->
+                <div id="steps-cards-container" class="space-y-2 overflow-y-auto custom-scroll pr-1">
+                    <!-- Заполняется через JS -->
+                </div>
+
+                <!-- Нижний блок: Главный вывод + Персонаж Луи + Кнопки Назад/Далее -->
+                <div class="space-y-2.5 pt-2 shrink-0">
+                    <!-- Главный вывод -->
+                    <div id="main-conclusion-card" class="rounded-2xl px-4 py-2.5 border-2 transition-all duration-300">
+                        <div class="flex items-center gap-1.5 text-xs font-oswald uppercase font-bold tracking-wider opacity-85">
+                            <span>💡</span>
+                            <span>Главный вывод:</span>
+                        </div>
+                        <p id="main-conclusion-text" class="text-sm lg:text-base font-extrabold leading-snug mt-0.5">
+                            Дождь — это вода в жидком состоянии.
+                        </p>
+                    </div>
+
+                    <!-- Карточка с объёмным векторным Луи -->
+                    <div class="flex items-center gap-3 bg-gradient-to-r from-purple-50 via-fuchsia-50 to-indigo-50 border-2 border-purple-200 rounded-2xl px-3.5 py-2 shadow-sm">
+                        <div class="relative bg-white border-2 border-purple-300 rounded-xl px-3 py-2 flex-1 shadow-xs">
+                            <div class="text-[10px] font-oswald uppercase text-purple-600 font-bold tracking-wider">
+                                Луи с планеты Терра-5:
+                            </div>
+                            <p id="louie-bubble-text" class="text-xs lg:text-[13px] text-slate-800 font-bold leading-snug mt-0.5">
+                                Смотри! Солнышко нагрело воду, и тёплый пар поднимается вверх в облако!
+                            </p>
+                            <!-- Хвостик облачка к Луи -->
+                            <div class="absolute top-1/2 -right-2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[8px] border-l-purple-300"></div>
+                        </div>
+
+                        <!-- Встроенный яркий слегка объёмный SVG-персонаж Луи -->
+                        <div id="louie-svg-box" onclick="pokeLouie()" class="louie-float w-16 h-16 lg:w-20 lg:h-20 shrink-0 cursor-pointer" title="Нажми на Луи!">
+
+    <img src="lui_d.png" alt="Луи" class="louie-image louie-float">
+                              <defs>
+                                    <!-- Объёмные градиенты тела и глаз Луи -->
+                                    <radialGradient id="louieBody3D" cx="35%" cy="28%" r="68%">
+                                        <stop offset="0%" stop-color="#D8B4FE"/>
+                                        <stop offset="45%" stop-color="#9333EA"/>
+                                        <stop offset="88%" stop-color="#6B21A8"/>
+                                        <stop offset="100%" stop-color="#581C87"/>
+                                    </radialGradient>
+                                    <radialGradient id="louieLimb3D" cx="30%" cy="30%" r="70%">
+                                        <stop offset="0%" stop-color="#C084FC"/>
+                                        <stop offset="100%" stop-color="#6B21A8"/>
+                                    </radialGradient>
+                                    <radialGradient id="louieEyeSocket" cx="35%" cy="30%" r="70%">
+                                        <stop offset="0%" stop-color="#C084FC"/>
+                                        <stop offset="65%" stop-color="#7E22CE"/>
+                                        <stop offset="100%" stop-color="#4C1D95"/>
+                                    </radialGradient>
+                                    <radialGradient id="eyeBallShade" cx="40%" cy="35%" r="65%">
+                                        <stop offset="0%" stop-color="#FFFFFF"/>
+                                        <stop offset="80%" stop-color="#F8FAFC"/>
+                                        <stop offset="100%" stop-color="#CBD5E1"/>
+                                    </radialGradient>
+                                </defs>
+
+                                <!-- Мягкая тень на земле -->
+                                <ellipse cx="70" cy="139" rx="35" ry="5" fill="#C4B5FD" opacity="0.75"/>
+
+                                <!-- Ножки -->
+                                <path d="M54 113 L51 132 Q39 133 37 137 Q48 140 59 136 L62 113 Z" fill="url(#louieLimb3D)" stroke="#4C1D95" stroke-width="2.2" stroke-linejoin="round"/>
+                                <path d="M86 113 L89 132 Q101 133 103 137 Q92 140 81 136 L78 113 Z" fill="url(#louieLimb3D)" stroke="#4C1D95" stroke-width="2.2" stroke-linejoin="round"/>
+
+                                <!-- Левая рука (приветственно поднята) -->
+                                <path d="M36 85 Q17 74 22 59 Q25 54 30 59 Q31 65 39 76" fill="none" stroke="url(#louieLimb3D)" stroke-width="7.5" stroke-linecap="round"/>
+                                <circle cx="23" cy="58" r="6" fill="url(#louieLimb3D)" stroke="#4C1D95" stroke-width="2"/>
+
+                                <!-- Правая рука -->
+                                <path d="M104 85 Q121 94 115 106 Q111 111 106 105" fill="none" stroke="url(#louieLimb3D)" stroke-width="7.5" stroke-linecap="round"/>
+                                <circle cx="111" cy="106" r="6" fill="url(#louieLimb3D)" stroke="#4C1D95" stroke-width="2"/>
+
+                                <!-- Стебельки глаз -->
+                                <path d="M55 56 L45 33" stroke="url(#louieLimb3D)" stroke-width="8.5" stroke-linecap="round"/>
+                                <path d="M85 56 L95 33" stroke="url(#louieLimb3D)" stroke-width="8.5" stroke-linecap="round"/>
+
+                                <!-- Объёмное тело Луи -->
+                                <ellipse cx="70" cy="86" rx="38" ry="34" fill="url(#louieBody3D)" stroke="#4C1D95" stroke-width="2.5"/>
+                                <!-- Глянцевый верхний блик -->
+                                <ellipse cx="56" cy="63" rx="13" ry="5" transform="rotate(-18 56 63)" fill="#F3E8FF" opacity="0.55"/>
+
+                                <!-- Левый глаз на стебельке -->
+                                <circle cx="43" cy="25" r="18.5" fill="url(#louieEyeSocket)" stroke="#4C1D95" stroke-width="2.2"/>
+                                <circle cx="43" cy="25" r="14" fill="url(#eyeBallShade)"/>
+                                <g class="louie-pupil">
+                                    <circle cx="46" cy="25" r="6.8" fill="#0F172A"/>
+                                    <circle cx="48.5" cy="22.5" r="2.4" fill="#FFFFFF"/>
+                                </g>
+
+                                <!-- Правый глаз на стебельке -->
+                                <circle cx="97" cy="25" r="18.5" fill="url(#louieEyeSocket)" stroke="#4C1D95" stroke-width="2.2"/>
+                                <circle cx="97" cy="25" r="14" fill="url(#eyeBallShade)"/>
+                                <g class="louie-pupil">
+                                    <circle cx="94" cy="25" r="6.8" fill="#0F172A"/>
+                                    <circle cx="96.5" cy="22.5" r="2.4" fill="#FFFFFF"/>
+                                </g>
+
+                                <!-- Один выразительный рот с язычком и двумя белыми зубками -->
+                                <path d="M48 85 Q70 73 92 85 Q90 104 70 104 Q50 104 48 85 Z" fill="#2E1065" stroke="#4C1D95" stroke-width="2.2"/>
+                                <path d="M58 99 Q70 91 82 99 Q76 104 70 104 Q64 104 58 99 Z" fill="#FB7185"/>
+                                <!-- Два белых зубика -->
+                                <rect x="60.5" y="79.5" width="8.5" height="9.5" rx="2.2" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+                                <rect x="71" y="79.5" width="8.5" height="9.5" rx="2.2" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки управления шагами «Назад» и «Следующий шаг ->» -->
+                    <div class="flex items-center gap-2.5 pt-0.5">
+                        <button onclick="prevStep()" id="btn-step-prev" class="font-oswald text-sm lg:text-base font-bold py-2.5 px-4 rounded-xl border-2 border-slate-300 text-slate-700 hover:bg-slate-100 disabled:opacity-40 disabled:pointer-events-none transition-all cursor-pointer">
+                            ← Назад
+                        </button>
+                        <button onclick="nextStep()" id="btn-step-next" class="flex-1 font-oswald text-sm lg:text-base font-bold py-2.5 px-5 rounded-xl text-white shadow-md hover:brightness-105 active:scale-[0.99] transition-all cursor-pointer">
+                            Следующий шаг →
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 3. СЛАЙД 4: ИТОГ И МИНИ-ВИКТОРИНА ОТ ЛУИ (скрыт, пока не выбран 4-й слайд) -->
+        <section id="quiz-workspace" class="hidden flex-1 min-h-0 p-5 lg:p-6 flex flex-col justify-between bg-gradient-to-br from-amber-50/70 via-white to-sky-50/80 overflow-y-auto custom-scroll">
+            
+            <!-- Итоговая плашка урока -->
+            <div class="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 text-white rounded-2xl p-4 shadow-md flex items-center gap-4 shrink-0">
+                <div class="w-14 h-14 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-3xl shrink-0">
+                    🌍
+                </div>
+                <div>
+                    <div class="font-oswald uppercase text-xs tracking-wider text-sky-100 font-bold">
+                        Главный итог исследования:
+                    </div>
+                    <p class="text-sm sm:text-base lg:text-lg font-extrabold leading-snug mt-0.5">
+                        Вода в природе постоянно меняет своё состояние: испаряется, образует облака и выпадает на землю в виде дождя, снега или града.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Центральный интерактивный блок викторины -->
+            <div id="quiz-card-box" class="my-3 flex-1 min-h-0 bg-white border-2 border-amber-200 rounded-3xl p-4 lg:p-5 shadow-sm flex flex-col justify-between">
+                <!-- Вопросы генерируются через JS -->
+            </div>
+
+                           <div class="flex items-center gap-3 bg-purple-50 border-2 border-purple-200 rounded-2xl px-4 py-2 flex-1">
+    <img src="lui_d2.png" alt="Луи" class="louie-jump w-14 h-14 shrink-0 object-contain">
+    <div>
+        <div class="text-[10px] font-oswald uppercase text-purple-700 font-bold">Совет от Луи:</div>
+        <p id="quiz-louie-tip" class="text-xs sm:text-sm font-bold text-slate-800">
+            Вспомни все три облака: тёплое дождевое, морозное снежное и бурную грозовую тучу!
+        </p>
+    </div>
+</div>
+
+                <button onclick="goToSlide(0)" class="font-oswald text-sm lg:text-base font-bold py-3 px-5 rounded-2xl bg-slate-800 hover:bg-slate-900 text-white shadow cursor-pointer shrink-0">
+                    ↺ Начать урок сначала
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JAVASCRIPT ЛОГИКА -->
+    <script>
+        // Полная база знаний по 3 сценариям
+        const SCENARIOS = [
+            {
+                id: 'rain',
+                badge: 'Сценарий 1',
+                headerBg: 'bg-gradient-to-r from-sky-600 via-cyan-600 to-blue-600',
+                subBg: 'bg-sky-50/90 border-sky-200',
+                badgeBg: 'bg-sky-600',
+                stepBadgeBg: 'bg-sky-100 text-sky-800',
+                btnMainBg: 'bg-sky-600 hover:bg-sky-700',
+                pillActive: 'bg-sky-600 text-white border-sky-600 shadow-sm',
+                pillInactive: 'bg-white text-sky-800 border-sky-200 hover:bg-sky-50',
+                cardActive: 'bg-sky-50 border-sky-400 shadow-sm',
+                conclusionStyle: 'bg-sky-50 border-sky-300 text-sky-950',
+                tempEmoji: '☀️',
+                tempLabel: 'Температура: выше 0 °C (тепло)',
+                conclusion: 'Дождь — это вода в жидком состоянии.',
+                stepLabels: ['1. Конвекция', '2. Рост капель', '3. Дождь'],
+                steps: [
+                    {
+                        num: 1,
+                        title: 'Испарение и конвекция',
+                        desc: 'Солнце греет водоём, тёплый воздух и водяной пар поднимаются вверх (конвекция), а наверху формируется облако.',
+                        louie: 'Смотри! Солнышко нагрело воду, и тёплый пар по стрелкам конвекции поднимается вверх в облако!'
+                    },
+                    {
+                        num: 2,
+                        title: 'Конденсация и рост',
+                        desc: 'В облаке мельчайшие капельки воды сталкиваются друг с другом, соединяются и становятся крупнее.',
+                        louie: 'Внутри облака капельки сталкиваются, сливаются и превращаются в крупные тяжёлые капли!'
+                    },
+                    {
+                        num: 3,
+                        title: 'Выпадение осадков',
+                        desc: 'Когда капли становятся достаточно тяжёлыми, воздух больше не может их удержать, и они падают на землю дождём.',
+                        louie: 'Ура, пошёл тёплый дождик! Видишь круги на воде? Дождь — это вода в жидком состоянии.'
+                    }
+                ]
+            },
+            {
+                id: 'snow',
+                badge: 'Сценарий 2',
+                headerBg: 'bg-gradient-to-r from-cyan-700 via-sky-700 to-indigo-700',
+                subBg: 'bg-cyan-50/90 border-cyan-200',
+                badgeBg: 'bg-cyan-700',
+                stepBadgeBg: 'bg-cyan-100 text-cyan-900',
+                btnMainBg: 'bg-cyan-700 hover:bg-cyan-800',
+                pillActive: 'bg-cyan-700 text-white border-cyan-700 shadow-sm',
+                pillInactive: 'bg-white text-cyan-900 border-cyan-200 hover:bg-cyan-50',
+                cardActive: 'bg-cyan-50 border-cyan-400 shadow-sm',
+                conclusionStyle: 'bg-cyan-50 border-cyan-300 text-cyan-950',
+                tempEmoji: '❄️',
+                tempLabel: 'Температура в облаке: ниже 0 °C (мороз)',
+                conclusion: 'Снег — это вода в твёрдом состоянии (лёд).',
+                stepLabels: ['1. Мороз < 0 °C', '2. Снежинки', '3. Снегопад'],
+                steps: [
+                    {
+                        num: 1,
+                        title: 'Охлаждение и кристаллизация',
+                        desc: 'В высоком холодном облаке при температуре ниже 0 °C водяной пар сразу превращается в крошечные кристаллики льда.',
+                        louie: 'Бр-р, здесь ниже нуля! Водяной пар сразу превращается в шестигранные кристаллики льда.'
+                    },
+                    {
+                        num: 2,
+                        title: 'Рост снежинок',
+                        desc: 'Кристаллики льда соединяются друг с другом, обрастают лучиками и превращаются в красивые резные снежинки.',
+                        louie: 'Каждая снежинка уникальна! Кристаллики соединяются и выращивают резные ажурные лучики.'
+                    },
+                    {
+                        num: 3,
+                        title: 'Снегопад',
+                        desc: 'Когда снежинки становятся тяжёлыми, они плавно кружатся и падают на землю пушистым снегом.',
+                        louie: 'Настоящий снегопад укрывает горы и ёлки! Запомни: снег — это вода в твёрдом состоянии.'
+                    }
+                ]
+            },
+            {
+                id: 'hail',
+                badge: 'Сценарий 3',
+                headerBg: 'bg-gradient-to-r from-indigo-700 via-purple-700 to-violet-800',
+                subBg: 'bg-indigo-50/90 border-indigo-200',
+                badgeBg: 'bg-indigo-600',
+                stepBadgeBg: 'bg-indigo-100 text-indigo-900',
+                btnMainBg: 'bg-indigo-600 hover:bg-indigo-700',
+                pillActive: 'bg-indigo-600 text-white border-indigo-600 shadow-sm',
+                pillInactive: 'bg-white text-indigo-800 border-indigo-200 hover:bg-indigo-50',
+                cardActive: 'bg-indigo-50 border-indigo-400 shadow-sm',
+                conclusionStyle: 'bg-indigo-50 border-indigo-300 text-indigo-950',
+                tempEmoji: '⛈️',
+                tempLabel: 'Мощная грозовая туча (сильные потоки)',
+                conclusion: 'Град — это кусочки льда.',
+                stepLabels: ['1. Вихри вверх', '2. Слои льда', '3. Градопад'],
+                steps: [
+                    {
+                        num: 1,
+                        title: 'Мощная конвекция',
+                        desc: 'В грозовом облаке сильные восходящие потоки тёплого воздуха стремительно поднимают капли воды высоко вверх в холодную зону.',
+                        louie: 'Ого, какой ветер внутри грозовой тучи! Мощная конвекция забрасывает капли на огромную высоту!'
+                    },
+                    {
+                        num: 2,
+                        title: 'Замерзание и намерзание слоёв',
+                        desc: 'Наверху капли замерзают, падают вниз, снова подхватываются потоком вверх и обрастают новыми слоями льда, как луковица.',
+                        louie: 'Градинки катаются на воздушных качелях вверх-вниз и обрастают слоями льда, как луковица!'
+                    },
+                    {
+                        num: 3,
+                        title: 'Градопад',
+                        desc: 'Когда ледяные шарики становятся слишком тяжёлыми для восходящих потоков, они стремительно падают на землю градом.',
+                        louie: 'Береги скафандр! Шарики стали слишком тяжёлыми для ветра и посыпались на землю градом.'
+                    }
+                ]
+            }
+        ];
+
+        // Вопросы для 4-го слайда
+               // Вопросы для 4-го слайда (10 вопросов)
+        const QUIZ_QUESTIONS = [
+            {
+                question: '1. Сильные восходящие потоки в грозовой туче гоняют капли вверх и вниз, и они обрастают слоями льда, как луковица. Что выпадет на землю?',
+                options: [
+                    { id: 'rain', label: '💧 Дождь', desc: 'капли жидкой воды' },
+                    { id: 'snow', label: '❄️ Снег', desc: 'лёгкие кристаллики льда' },
+                    { id: 'hail', label: '🧊 Град', desc: 'плотные ледяные шарики' }
+                ],
+                correct: 'hail',
+                feedbackCorrect: 'Точно! Это град — ледяные шарики, которые выросли в мощных потоках грозового облака.',
+                feedbackWrong: 'Не совсем! Вспомни Сценарий 3: катание вверх-вниз в грозовой туче создаёт ледяные шарики — град.'
+            },
+            {
+                question: '2. В высоком холодном облаке при температуре ниже 0 °C водяной пар сразу превращается в шестигранные кристаллики льда. Какой это вид осадков?',
+                options: [
+                    { id: 'rain', label: '💧 Дождь', desc: 'вода в жидком состоянии' },
+                    { id: 'snow', label: '❄️ Снег', desc: 'вода в твёрдом состоянии' },
+                    { id: 'hail', label: '🧊 Град', desc: 'кусочки льда летом' }
+                ],
+                correct: 'snow',
+                feedbackCorrect: 'Молодец! Снег образуется из кристалликов льда при температуре ниже 0 °C.',
+                feedbackWrong: 'Попробуй ещё раз! При морозе ниже 0 °C водяной пар превращается в кристаллики льда — это снег.'
+            },
+            {
+                question: '3. Как называется процесс, когда нагретый солнцем тёплый воздух и водяной пар поднимаются вверх и образуют облако?',
+                options: [
+                    { id: 'convection', label: '⬆️ Конвекция', desc: 'подъём тёплого воздуха вверх' },
+                    { id: 'hailfall', label: '🧊 Градопад', desc: 'падение кусочков льда' },
+                    { id: 'freezing', label: '🥶 Замерзание', desc: 'превращение в ледяную корку' }
+                ],
+                correct: 'convection',
+                feedbackCorrect: 'Блестяще! Конвекция — это подъём тёплого воздуха вверх, с неё начинается рождение облака!',
+                feedbackWrong: 'Подсказка от Луи: вспомни Шаг 1! Подъём тёплого воздуха и пара вверх называется конвекцией.'
+            },
+            {
+                question: '4. Что происходит с мельчайшими капельками воды внутри тёплого дождевого облака на втором шаге?',
+                options: [
+                    { id: 'merge', label: '🤝 Сливаются', desc: 'сталкиваются и становятся крупнее' },
+                    { id: 'freeze', label: '🥶 Замерзают', desc: 'превращаются в лёд' },
+                    { id: 'evaporate', label: '💨 Испаряются', desc: 'исчезают без следа' }
+                ],
+                correct: 'merge',
+                feedbackCorrect: 'Верно! Капельки сталкиваются, сливаются и тяжелеют — так рождается дождевая капля.',
+                feedbackWrong: 'Вспомни Шаг 2 сценария «Дождь»: капельки сталкиваются и сливаются в крупные тяжёлые капли.'
+            },
+            {
+                question: '5. Почему капли дождя в конце концов падают на землю?',
+                options: [
+                    { id: 'heavy', label: '⚖️ Стали тяжёлыми', desc: 'воздух не может их удержать' },
+                    { id: 'cold', label: '❄️ Стало холодно', desc: 'капли замёрзли' },
+                    { id: 'wind', label: '🌬️ Подул ветер', desc: 'ветер сдул их вниз' }
+                ],
+                correct: 'heavy',
+                feedbackCorrect: 'Правильно! Когда капли становятся достаточно тяжёлыми, воздух больше не может их удержать.',
+                feedbackWrong: 'Подсказка: дело не в холоде и не в ветре, а в весе капель. Вспомни Шаг 3!'
+            },
+            {
+                question: '6. Что такое снежинка по своей сути?',
+                options: [
+                    { id: 'ice', label: '❄️ Кристаллик льда', desc: 'вода в твёрдом состоянии' },
+                    { id: 'water', label: '💧 Капля воды', desc: 'вода в жидком состоянии' },
+                    { id: 'vapor', label: '💨 Водяной пар', desc: 'газообразная вода' }
+                ],
+                correct: 'ice',
+                feedbackCorrect: 'Точно! Снежинка — это кристаллик льда, то есть вода в твёрдом состоянии.',
+                feedbackWrong: 'Не совсем! Снежинка — это не капля и не пар, а кристаллик льда.'
+            },
+            {
+                question: '7. Чем град отличается от снега?',
+                options: [
+                    { id: 'dense', label: '🧊 Плотные слои льда', desc: 'град — плотные ледяные шарики' },
+                    { id: 'white', label: '🤍 Цветом', desc: 'град всегда белее снега' },
+                    { id: 'warm', label: '☀️ Тёплый', desc: 'град выпадает только в жару' }
+                ],
+                correct: 'dense',
+                feedbackCorrect: 'Верно! Град — это плотные ледяные шарики из множества слоёв льда, а снег — лёгкие кристаллики.',
+                feedbackWrong: 'Вспомни Сценарий 3: градинка обрастает слоями льда, как луковица, поэтому она плотная.'
+            },
+            {
+                question: '8. В какое время года чаще всего выпадает град?',
+                options: [
+                    { id: 'summer', label: '☀️ Летом', desc: 'в сильную жару с грозами' },
+                    { id: 'winter', label: '❄️ Зимой', desc: 'в сильный мороз' },
+                    { id: 'autumn', label: '🍂 Осенью', desc: 'в дождливую погоду' }
+                ],
+                correct: 'summer',
+                feedbackCorrect: 'Да! Град чаще всего бывает летом, когда в грозовой туче очень мощные восходящие потоки.',
+                feedbackWrong: 'Подсказка: для града нужна мощная гроза и сильные потоки воздуха. Когда это бывает чаще?'
+            },
+            {
+                question: '9. Из чего состоят облака?',
+                options: [
+                    { id: 'droplets', label: '💧 Капельки и кристаллики', desc: 'мельчайшие капли воды и льда' },
+                    { id: 'smoke', label: '💨 Дым', desc: 'частицы от сгорания' },
+                    { id: 'dust', label: '🌫️ Пыль', desc: 'частицы пыли и песка' }
+                ],
+                correct: 'droplets',
+                feedbackCorrect: 'Правильно! Облака — это скопления мельчайших капелек воды и кристалликов льда.',
+                feedbackWrong: 'Вернись к плашке в начале слайда: облака состоят из мельчайших капелек воды и кристалликов льда.'
+            },
+            {
+                question: '10. Какой главный вывод об осадках мы сделали на уроке?',
+                options: [
+                    { id: 'states', label: '🔄 Вода меняет состояние', desc: 'дождь, снег и град — это вода в разных состояниях' },
+                    { id: 'different', label: '🔀 Это разные вещества', desc: 'дождь, снег и град никак не связаны' },
+                    { id: 'only', label: '💧 Только дождь — вода', desc: 'снег и град — не вода' }
+                ],
+                correct: 'states',
+                feedbackCorrect: 'Именно так! Дождь, снег и град — это одна и та же вода в разных состояниях: жидком, твёрдом.',
+                feedbackWrong: 'Вспомни главный итог: вода в природе постоянно меняет своё состояние. Дождь, снег и град — это всё вода!'
+            }
+        ];
+
+        // Состояние презентации
+        let currentSlide = 0; // 0: Дождь, 1: Снег, 2: Град, 3: Итог и тест
+        let currentStep = 1;  // 1, 2, 3
+        let quizIndex = 0;
+        let quizScore = 0;
+        let quizAnswered = false;
+        let selectedOptionId = null;
+
+        // Переключение слайдов
+        function goToSlide(index) {
+            if (index < 0 || index > 3) return;
+            currentSlide = index;
+            if (currentSlide < 3) {
+                currentStep = 1;
+            } else {
+                quizIndex = 0;
+                quizScore = 0;
+                quizAnswered = false;
+                selectedOptionId = null;
+            }
+            bounceLouie();
+            renderPresentation();
+        }
+
+        function changeSlide(delta) {
+            goToSlide(currentSlide + delta);
+        }
+
+        // Переключение шагов внутри слайда
+        function setStep(step) {
+            if (step < 1 || step > 3) return;
+            currentStep = step;
+            renderPresentation();
+        }
+
+        function nextStep() {
+            if (currentStep < 3) {
+                currentStep++;
+                renderPresentation();
+            } else {
+                goToSlide(currentSlide + 1);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                renderPresentation();
+            }
+        }
+
+        // Реакция Луи на клик
+        function bounceLouie() {
+            const box = document.getElementById('louie-svg-box');
+            if (!box) return;
+            box.classList.remove('louie-bounce');
+            void box.offsetWidth;
+            box.classList.add('louie-bounce');
+        }
+
+        function pokeLouie() {
+            bounceLouie();
+            const funFacts = [
+                'Бип-боп! Обычное кучевое облако весит около 500 тонн — как сто слонов!',
+                'На планете Терра-5 дождь тоже идёт из воды, а вот на Юпитере бывают алмазные дожди!',
+                'Нажимай на шаги 1, 2 и 3, чтобы увидеть весь путь капельки воды!'
+            ];
+            document.getElementById('louie-bubble-text').textContent = funFacts[Math.floor(Math.random() * funFacts.length)];
+        }
+
+        // Главный рендер слайда 16:9
+        function renderPresentation() {
+            // Обновляем вкладки навигации в шапке
+            for (let i = 0; i < 4; i++) {
+                const tab = document.getElementById(`nav-tab-${i}`);
+                if (i === currentSlide) {
+                    tab.className = 'font-oswald text-xs sm:text-sm lg:text-base font-bold px-3 py-1.5 rounded-xl bg-white text-slate-900 shadow-md scale-[1.03] transition-all cursor-pointer flex items-center gap-1.5';
+                } else {
+                    tab.className = 'font-oswald text-xs sm:text-sm lg:text-base font-bold px-3 py-1.5 rounded-xl text-white/90 hover:bg-white/15 transition-all cursor-pointer flex items-center gap-1.5';
+                }
+            }
+
+            // Индикатор и кнопки в шапке
+            document.getElementById('slide-counter-badge').textContent = `${currentSlide + 1} / 4`;
+            document.getElementById('header-prev-slide').disabled = currentSlide === 0;
+            document.getElementById('header-next-slide').disabled = currentSlide === 3;
+
+            const slideWorkspace = document.getElementById('slide-workspace');
+            const quizWorkspace = document.getElementById('quiz-workspace');
+            const topHeader = document.getElementById('top-header');
+
+            // Если выбран Слайд 4 (Итог и викторина)
+            if (currentSlide === 3) {
+                topHeader.className = 'px-5 py-2.5 bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white flex items-center justify-between gap-3 shrink-0 shadow-md z-20';
+                slideWorkspace.classList.add('hidden');
+                quizWorkspace.classList.remove('hidden');
+                renderQuiz();
+                return;
+            }
+
+            // Иначе отображаем один из 3 сценариев (Дождь, Снег, Град)
+            slideWorkspace.classList.remove('hidden');
+            quizWorkspace.classList.add('hidden');
+
+            const data = SCENARIOS[currentSlide];
+            const stepInfo = data.steps[currentStep - 1];
+
+            // Оформление шапки и подшапки под текущий сценарий
+            topHeader.className = `px-5 py-2.5 text-white flex items-center justify-between gap-3 shrink-0 shadow-md z-20 transition-colors duration-300 ${data.headerBg}`;
+            
+            const subheader = document.getElementById('scenario-subheader');
+            subheader.className = `rounded-2xl px-4 py-2 border-2 flex items-center justify-between gap-3 shadow-xs shrink-0 transition-colors duration-300 ${data.subBg}`;
+
+            const pillBadge = document.getElementById('scenario-pill-badge');
+            pillBadge.className = `px-2.5 py-0.5 rounded-lg font-oswald text-xs font-bold uppercase tracking-wider text-white shrink-0 ${data.badgeBg}`;
+            pillBadge.textContent = data.badge;
+
+            const stepBadgeRight = document.getElementById('step-badge-right');
+            stepBadgeRight.className = `font-oswald text-xs sm:text-sm font-bold px-3 py-0.5 rounded-xl shrink-0 ${data.stepBadgeBg}`;
+            stepBadgeRight.textContent = `Шаг ${currentStep} из 3`;
+
+            // Индикатор температуры на сцене
+            document.getElementById('temp-emoji').textContent = data.tempEmoji;
+            document.getElementById('temp-label').textContent = data.tempLabel;
+
+            // Кнопки шагов под SVG
+            for (let s = 1; s <= 3; s++) {
+                const btn = document.getElementById(`step-btn-${s}`);
+                btn.innerHTML = `<span>${data.stepLabels[s - 1]}</span>`;
+                btn.className = `py-2 px-3 rounded-xl font-oswald text-xs sm:text-sm lg:text-base font-bold border-2 transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                    s === currentStep ? data.pillActive : data.pillInactive
+                }`;
+            }
+
+            // Карточки шагов справа
+            const cardsContainer = document.getElementById('steps-cards-container');
+            cardsContainer.innerHTML = data.steps.map(st => {
+                const active = st.num === currentStep;
+                const passed = st.num < currentStep;
+                return `
+                    <div onclick="setStep(${st.num})" class="p-3 rounded-2xl border-2 transition-all cursor-pointer ${
+                        active ? data.cardActive : passed ? 'bg-slate-50 border-slate-200 opacity-90' : 'bg-white border-slate-100 opacity-70 hover:opacity-100'
+                    }">
+                        <div class="flex items-center gap-2 mb-0.5">
+                            <span class="w-6 h-6 rounded-full flex items-center justify-center font-oswald text-xs font-bold shrink-0 ${
+                                active ? `${data.badgeBg} text-white` : passed ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-600'
+                            }">
+                                ${passed ? '✓' : st.num}
+                            </span>
+                            <h3 class="font-oswald text-sm lg:text-base font-bold text-slate-900">
+                                Шаг ${st.num}: ${st.title}
+                            </h3>
+                        </div>
+                        <p class="text-xs lg:text-[13px] text-slate-700 leading-snug pl-8 font-semibold">
+                            ${st.desc}
+                        </p>
+                    </div>
+                `;
+            }).join('');
+
+            // Главный вывод
+            const conclusionCard = document.getElementById('main-conclusion-card');
+            document.getElementById('main-conclusion-text').textContent = data.conclusion;
+            conclusionCard.className = `rounded-2xl px-4 py-2 border-2 transition-all duration-300 ${data.conclusionStyle} ${
+                currentStep === 3 ? 'ring-2 ring-offset-1 ring-sky-400 shadow-sm scale-[1.01]' : 'opacity-80'
+            }`;
+
+            // Реплика Луи
+            document.getElementById('louie-bubble-text').textContent = stepInfo.louie;
+
+            // Кнопки Назад / Следующий шаг
+            document.getElementById('btn-step-prev').disabled = currentStep === 1;
+            const nextBtn = document.getElementById('btn-step-next');
+            nextBtn.className = `flex-1 font-oswald text-sm lg:text-base font-bold py-2.5 px-5 rounded-xl text-white shadow-md hover:brightness-105 active:scale-[0.99] transition-all cursor-pointer ${data.btnMainBg}`;
+            
+            if (currentStep < 3) {
+                nextBtn.textContent = 'Следующий шаг →';
+            } else if (currentSlide === 0) {
+                nextBtn.textContent = 'Слайд 2: Снег →';
+            } else if (currentSlide === 1) {
+                nextBtn.textContent = 'Слайд 3: Град →';
+            } else {
+                nextBtn.textContent = 'Слайд 4: Итог и тест →';
+            }
+
+            // Отрисовка чёткой SVG-иллюстрации
+            renderSceneSVG(data.id, currentStep);
+        }
+
+        // Высокодетализированная SVG-графика с бликами, тенями и плавной анимацией
+        function renderSceneSVG(type, step) {
+            const svg = document.getElementById('scene-svg');
+
+            const sharedDefs = `
+                <defs>
+                    <linearGradient id="daySkyGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#38BDF8"/>
+                        <stop offset="55%" stop-color="#BAE6FD"/>
+                        <stop offset="100%" stop-color="#E0F2FE"/>
+                    </linearGradient>
+                    <linearGradient id="snowSkyGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#60A5FA"/>
+                        <stop offset="60%" stop-color="#DBEAFE"/>
+                        <stop offset="100%" stop-color="#F8FAFC"/>
+                    </linearGradient>
+                    <linearGradient id="stormSkyGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#475569"/>
+                        <stop offset="55%" stop-color="#94A3B8"/>
+                        <stop offset="100%" stop-color="#CBD5E1"/>
+                    </linearGradient>
+                    <linearGradient id="lakeGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#0EA5E9"/>
+                        <stop offset="100%" stop-color="#0369A1"/>
+                    </linearGradient>
+                    <linearGradient id="cloudFluffy" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#FFFFFF"/>
+                        <stop offset="72%" stop-color="#F1F5F9"/>
+                        <stop offset="100%" stop-color="#CBD5E1"/>
+                    </linearGradient>
+                    <linearGradient id="cloudThunder" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#64748B"/>
+                        <stop offset="55%" stop-color="#334155"/>
+                        <stop offset="100%" stop-color="#1E293B"/>
+                    </linearGradient>
+                    <filter id="softDropShadow" x="-10%" y="-10%" width="120%" height="125%">
+                        <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#0F172A" flood-opacity="0.18"/>
+                    </filter>
+                </defs>
+            `;
+
+            function cloudShape(isThunder = false, semiTransparent = false) {
+                const fill = isThunder ? 'url(#cloudThunder)' : 'url(#cloudFluffy)';
+                const stroke = isThunder ? '#1E293B' : '#94A3B8';
+                return `
+                    <g filter="url(#softDropShadow)" opacity="${semiTransparent ? '0.9' : '1'}">
+                        <path d="M200 160 
+                                 C168 160, 152 132, 175 110 
+                                 C175 80, 214 66, 242 82 
+                                 C262 50, 320 44, 348 75 
+                                 C378 52, 428 66, 435 100 
+                                 C468 105, 478 144, 448 160 Z" 
+                              fill="${fill}" stroke="${stroke}" stroke-width="3" stroke-linejoin="round"/>
+                        <!-- Верхний световой контур облака -->
+                        <path d="M188 108 C192 84, 222 76, 242 88 C264 58, 316 54, 344 80" 
+                              fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" opacity="${isThunder ? '0.25' : '0.9'}"/>
+                    </g>
+                `;
+            }
+
+            function drawSnowflake(x, y, scale = 1, cls = '') {
+                return `
+                    <g transform="translate(${x}, ${y}) scale(${scale})" class="${cls}">
+                        <g stroke="#0284C7" stroke-width="2.6" stroke-linecap="round">
+                            <line x1="0" y1="-13" x2="0" y2="13"/>
+                            <line x1="-11.3" y1="-6.5" x2="11.3" y2="6.5"/>
+                            <line x1="-11.3" y1="6.5" x2="11.3" y2="-6.5"/>
+                            <path d="M-3.5 -9 L0 -5.5 L3.5 -9 M-3.5 9 L0 5.5 L3.5 9" fill="none" stroke-width="1.8"/>
+                        </g>
+                        <circle cx="0" cy="0" r="2.5" fill="#E0F2FE" stroke="#0284C7" stroke-width="1"/>
+                    </g>
+                `;
+            }
+
+            // 1. СЦЕНА ДОЖДЯ
+            if (type === 'rain') {
+                let html = sharedDefs + `
+                    <rect width="640" height="400" fill="url(#daySkyGrad)"/>
+                    <!-- Яркое солнце -->
+                    <g transform="translate(560, 68)">
+                        <g class="anim-sun" stroke="#F59E0B" stroke-width="4.5" stroke-linecap="round">
+                            <line x1="0" y1="-46" x2="0" y2="-35"/><line x1="0" y1="35" x2="0" y2="46"/>
+                            <line x1="-46" y1="0" x2="-35" y2="0"/><line x1="35" y1="0" x2="46" y2="0"/>
+                            <line x1="-32" y1="-32" x2="-24" y2="-24"/><line x1="24" y1="24" x2="32" y2="32"/>
+                            <line x1="-32" y1="32" x2="-24" y2="24"/><line x1="24" y1="-24" x2="32" y2="-32"/>
+                        </g>
+                        <circle cx="0" cy="0" r="27" fill="#FACC15" stroke="#F59E0B" stroke-width="3"/>
+                        <circle cx="-8" cy="-8" r="7" fill="#FEF08A" opacity="0.7"/>
+                    </g>
+                    <!-- Зелёные берега и синее озеро -->
+                    <path d="M0 305 Q150 262 300 305 L300 400 L0 400 Z" fill="#4ADE80"/>
+                    <path d="M340 305 Q495 258 640 300 L640 400 L340 400 Z" fill="#22C55E"/>
+                    <rect x="0" y="312" width="640" height="88" fill="url(#lakeGrad)"/>
+                    <path d="M0 312 Q160 303 320 312 T640 312" fill="none" stroke="#7DD3FC" stroke-width="3.5"/>
+                `;
+
+                if (step === 1) {
+                    html += `
+                        <line x1="525" y1="95" x2="410" y2="295" stroke="#FEF08A" stroke-width="3.5" stroke-dasharray="9 7" opacity="0.85"/>
+                        <line x1="545" y1="105" x2="485" y2="295" stroke="#FEF08A" stroke-width="3.5" stroke-dasharray="9 7" opacity="0.85"/>
+                        <g class="anim-convection">
+                            <path d="M235 292 L235 196 M224 210 L235 192 L246 210" fill="none" stroke="#EA580C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M315 298 L315 190 M304 204 L315 186 L326 204" fill="none" stroke="#EA580C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M395 292 L395 196 M384 210 L395 192 L406 210" fill="none" stroke="#EA580C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <g fill="#FFFFFF" stroke="#0284C7" stroke-width="1.8">
+                            <circle cx="265" cy="262" r="6.5" class="anim-vapor-1"/>
+                            <circle cx="348" cy="272" r="7.5" class="anim-vapor-2"/>
+                            <circle cx="290" cy="245" r="5.5" class="anim-vapor-3"/>
+                            <circle cx="378" cy="255" r="6.5" class="anim-vapor-1"/>
+                        </g>
+                        ${cloudShape(false, true)}
+                        <text x="312" y="124" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="#0369A1" font-weight="bold">КОНВЕКЦИЯ: ПАР ПОДНИМАЕТСЯ ВВЕРХ</text>
+                    `;
+                } else if (step === 2) {
+                    html += `
+                        ${cloudShape(false, false)}
+                        <g class="anim-pulse">
+                            <circle cx="248" cy="116" r="10" fill="#38BDF8" stroke="#0284C7" stroke-width="2"/>
+                            <circle cx="268" cy="120" r="8" fill="#7DD3FC" stroke="#0284C7" stroke-width="2"/>
+                            <path d="M292 117 L316 117 M309 110 L317 117 L309 124" stroke="#0284C7" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <path d="M352 94 C352 94, 370 116, 370 127 A18 18 0 1 1 334 127 C334 116, 352 94, 352 94 Z" fill="#0284C7" stroke="#0369A1" stroke-width="2.2"/>
+                            <ellipse cx="345" cy="124" rx="3.5" ry="7" fill="#BAE6FD" opacity="0.85"/>
+                        </g>
+                        <text x="312" y="186" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="#0369A1" font-weight="bold">КОНДЕНСАЦИЯ: КАПЛИ СЛИВАЮТСЯ И ТЯЖЕЛЕЮТ</text>
+                    `;
+                } else {
+                    html += `
+                        ${cloudShape(false, false)}
+                        <g fill="#0284C7" stroke="#0369A1" stroke-width="1">
+                            <path d="M225 168 C225 168, 233 181, 233 186 A8 8 0 1 1 217 186 C217 181, 225 168, 225 168 Z" class="anim-rain-1"/>
+                            <path d="M275 168 C275 168, 283 181, 283 186 A8 8 0 1 1 267 186 C267 181, 275 168, 275 168 Z" class="anim-rain-2"/>
+                            <path d="M325 168 C325 168, 333 181, 333 186 A8 8 0 1 1 317 186 C317 181, 325 168, 325 168 Z" class="anim-rain-3"/>
+                            <path d="M375 168 C375 168, 383 181, 383 186 A8 8 0 1 1 367 186 C367 181, 375 168, 375 168 Z" class="anim-rain-1"/>
+                            <path d="M418 168 C418 168, 426 181, 426 186 A8 8 0 1 1 410 186 C410 181, 418 168, 418 168 Z" class="anim-rain-2"/>
+                        </g>
+                        <ellipse cx="225" cy="345" rx="20" ry="5.5" fill="none" stroke="#E0F2FE" stroke-width="3" class="anim-ripple"/>
+                        <ellipse cx="325" cy="358" rx="24" ry="6.5" fill="none" stroke="#E0F2FE" stroke-width="3" class="anim-ripple"/>
+                        <ellipse cx="418" cy="342" rx="20" ry="5.5" fill="none" stroke="#E0F2FE" stroke-width="3" class="anim-ripple"/>
+                    `;
+                }
+                svg.innerHTML = html;
+                return;
+            }
+
+            // 2. СЦЕНА СНЕГА
+            if (type === 'snow') {
+                let html = sharedDefs + `
+                    <rect width="640" height="400" fill="url(#snowSkyGrad)"/>
+                    <!-- Горные вершины -->
+                    <polygon points="35,325 170,190 305,325" fill="#94A3B8"/>
+                    <polygon points="170,190 130,230 154,226 170,242 186,226 210,230" fill="#FFFFFF"/>
+                    <polygon points="325,325 485,175 625,325" fill="#64748B"/>
+                    <polygon points="485,175 438,220 465,215 485,234 505,215 532,220" fill="#FFFFFF"/>
+                    <!-- Снежный покров -->
+                    <path d="M0 320 Q320 295 640 320 L640 400 L0 400 Z" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2.5"/>
+                    <!-- Пушистые ёлочки -->
+                    <g transform="translate(82, 290)">
+                        <polygon points="0,-48 -24,0 24,0" fill="#0D9488"/><polygon points="0,-26 -30,24 30,24" fill="#0F766E"/>
+                        <path d="M-12 -24 L0 -48 L12 -24 Q0 -19 -12 -24 Z" fill="#FFFFFF"/>
+                    </g>
+                    <g transform="translate(555, 292)">
+                        <polygon points="0,-44 -22,0 22,0" fill="#0D9488"/><polygon points="0,-24 -28,22 28,22" fill="#0F766E"/>
+                        <path d="M-11 -22 L0 -44 L11 -22 Q0 -17 -11 -22 Z" fill="#FFFFFF"/>
+                    </g>
+                `;
+
+                if (step === 1) {
+                    html += `
+                        ${cloudShape(false, false)}
+                        <g class="anim-pulse">
+                            <polygon points="242,106 251,111 251,122 242,127 233,122 233,111" fill="#7DD3FC" stroke="#0284C7" stroke-width="2.2"/>
+                            <polygon points="312,98 321,103 321,114 312,119 303,114 303,103" fill="#7DD3FC" stroke="#0284C7" stroke-width="2.2"/>
+                            <polygon points="382,108 391,113 391,124 382,129 373,124 373,113" fill="#7DD3FC" stroke="#0284C7" stroke-width="2.2"/>
+                        </g>
+                        <text x="312" y="186" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="#0369A1" font-weight="bold">МОРОЗ НИЖЕ 0 °C: ПАР СТАНОВИТСЯ ЛЬДИНКАМИ</text>
+                    `;
+                } else if (step === 2) {
+                    html += `
+                        ${cloudShape(false, false)}
+                        ${drawSnowflake(242, 116, 1.2, 'anim-pulse')}
+                        ${drawSnowflake(312, 108, 1.4, 'anim-pulse')}
+                        ${drawSnowflake(382, 118, 1.2, 'anim-pulse')}
+                        <text x="312" y="186" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="#0369A1" font-weight="bold">КРИСТАЛЛИКИ РАСТУТ В АЖУРНЫЕ СНЕЖИНКИ</text>
+                    `;
+                } else {
+                    html += `
+                        ${cloudShape(false, false)}
+                        ${drawSnowflake(222, 178, 0.95, 'anim-snow-1')}
+                        ${drawSnowflake(272, 172, 1.1, 'anim-snow-2')}
+                        ${drawSnowflake(325, 180, 1.0, 'anim-snow-3')}
+                        ${drawSnowflake(376, 174, 1.05, 'anim-snow-1')}
+                        ${drawSnowflake(420, 178, 0.9, 'anim-snow-2')}
+                    `;
+                }
+                svg.innerHTML = html;
+                return;
+            }
+
+            // 3. СЦЕНА ГРАДА
+            if (type === 'hail') {
+                let html = sharedDefs + `
+                    <rect width="640" height="400" fill="url(#stormSkyGrad)"/>
+                    <!-- Вспышка молнии на фоне тучи -->
+                    <polygon points="445,145 425,195 446,195 432,245 472,182 450,182" fill="#FACC15" stroke="#FEF08A" stroke-width="1.5" class="anim-lightning"/>
+                    <!-- Летние холмы -->
+                    <path d="M0 305 Q180 262 360 305 T640 295 L640 400 L0 400 Z" fill="#22C55E"/>
+                    <rect x="0" y="318" width="640" height="82" fill="#16A34A"/>
+                `;
+
+                if (step === 1) {
+                    html += `
+                        <g class="anim-convection-fast">
+                            <path d="M230 306 C214 265, 246 235, 230 185 M219 200 L230 182 L241 200" fill="none" stroke="#F97316" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M312 312 C294 265, 330 230, 312 178 M301 193 L312 175 L323 193" fill="none" stroke="#EA580C" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M395 306 C379 265, 411 235, 395 185 M384 200 L395 182 L406 200" fill="none" stroke="#F97316" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        ${cloudShape(true, false)}
+                        <text x="312" y="124" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="#F8FAFC" font-weight="bold">МОЩНАЯ КОНВЕКЦИЯ ТЯНЕТ КАПЛИ ВВЕРХ</text>
+                    `;
+                } else if (step === 2) {
+                    html += `
+                        ${cloudShape(true, false)}
+                        <path d="M262 116 A52 28 0 1 1 364 116" fill="none" stroke="#38BDF8" stroke-width="3.5" stroke-dasharray="6 4"/>
+                        <path d="M364 116 A52 28 0 1 1 262 116" fill="none" stroke="#FACC15" stroke-width="3.5" stroke-dasharray="6 4"/>
+                        <g class="anim-hail-orbit-1">
+                            <circle cx="312" cy="116" r="13" fill="#E0F2FE" stroke="#0284C7" stroke-width="2.2"/>
+                            <circle cx="312" cy="116" r="7.5" fill="none" stroke="#38BDF8" stroke-width="1.8"/>
+                            <circle cx="312" cy="116" r="3.2" fill="#0284C7"/>
+                        </g>
+                        <g class="anim-hail-orbit-2">
+                            <circle cx="312" cy="116" r="13" fill="#E0F2FE" stroke="#0284C7" stroke-width="2.2"/>
+                            <circle cx="312" cy="116" r="7.5" fill="none" stroke="#38BDF8" stroke-width="1.8"/>
+                            <circle cx="312" cy="116" r="3.2" fill="#0284C7"/>
+                        </g>
+                        <text x="312" y="186" text-anchor="middle" font-family="Oswald, sans-serif" font-size="16" fill="#0F172A" font-weight="bold">СЛОИ ЛЬДА НАМЕРЗАЮТ, КАК ЛУКОВИЦА</text>
+                    `;
+                } else {
+                    html += `
+                        ${cloudShape(true, false)}
+                        <g>
+                            <circle cx="222" cy="174" r="8.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="2.2" class="anim-hail-1"/>
+                            <circle cx="274" cy="174" r="9.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="2.2" class="anim-hail-2"/>
+                            <circle cx="322" cy="174" r="10.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="2.2" class="anim-hail-3"/>
+                            <circle cx="370" cy="174" r="9" fill="#FFFFFF" stroke="#0284C7" stroke-width="2.2" class="anim-hail-1"/>
+                            <circle cx="416" cy="174" r="9.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="2.2" class="anim-hail-2"/>
+                        </g>
+                        <circle cx="218" cy="346" r="7.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="2"/>
+                        <circle cx="276" cy="358" r="8.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="2"/>
+                        <circle cx="324" cy="344" r="9.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="2"/>
+                        <circle cx="374" cy="356" r="8" fill="#FFFFFF" stroke="#0284C7" stroke-width="2"/>
+                        <circle cx="420" cy="346" r="8.5" fill="#FFFFFF" stroke="#0284C7" stroke-width="2"/>
+                    `;
+                }
+                svg.innerHTML = html;
+            }
+        }
+
+        // Рендер 4-го слайда: Итог и викторина
+        function renderQuiz() {
+            const box = document.getElementById('quiz-card-box');
+            const tip = document.getElementById('quiz-louie-tip');
+
+            if (quizIndex >= QUIZ_QUESTIONS.length) {
+                tip.textContent = `Ура! Ты набрал ${quizScore} из ${QUIZ_QUESTIONS.length}! Настоящий знаток земной погоды!`;
+                box.innerHTML = `
+                    <div class="my-auto text-center space-y-3 py-2">
+                        <div class="text-5xl">🎉🚀🏆</div>
+                        <h3 class="font-oswald text-2xl lg:text-3xl font-bold text-slate-900 uppercase">
+                            Космическая проверка завершена!
+                        </h3>
+                        <p class="text-lg lg:text-xl font-extrabold text-sky-700">
+                            Твой результат: ${quizScore} из ${QUIZ_QUESTIONS.length} правильных ответов!
+                        </p>
+                        <p class="text-slate-600 max-w-lg mx-auto text-sm font-semibold">
+                            Теперь ты знаешь, как конвекция рождает облака и почему из них выпадают дождь, снег или град.
+                        </p>
+                        <div class="pt-2 flex justify-center gap-3">
+                            <button onclick="restartQuiz()" class="font-oswald text-base font-bold py-2.5 px-6 rounded-xl bg-amber-500 hover:bg-amber-600 text-white shadow cursor-pointer">
+                                Пройти тест ещё раз ↻
+                            </button>
+                            <button onclick="goToSlide(0)" class="font-oswald text-base font-bold py-2.5 px-6 rounded-xl bg-sky-600 hover:bg-sky-700 text-white shadow cursor-pointer">
+                                К слайдам об облаках ☁️
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const q = QUIZ_QUESTIONS[quizIndex];
+            const isCorrect = selectedOptionId === q.correct;
+
+            box.innerHTML = `
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="px-3 py-0.5 rounded-full bg-amber-100 text-amber-900 text-xs font-extrabold">
+                            Вопрос ${quizIndex + 1} из ${QUIZ_QUESTIONS.length}
+                        </span>
+                        <span class="text-xs sm:text-sm font-bold text-slate-500">
+                            Верных ответов: <strong class="text-emerald-600">${quizScore}</strong>
+                        </span>
+                    </div>
+                    <h3 class="text-base sm:text-lg lg:text-xl font-extrabold text-slate-900 leading-snug">
+                        ${q.question}
+                    </h3>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3 my-3">
+                    ${q.options.map(opt => {
+                        let style = 'bg-slate-50 border-slate-200 hover:border-sky-400 hover:bg-sky-50 text-slate-900';
+                        if (quizAnswered) {
+                            if (opt.id === q.correct) style = 'bg-emerald-50 border-emerald-500 text-emerald-950 ring-2 ring-emerald-200';
+                            else if (opt.id === selectedOptionId) style = 'bg-rose-50 border-rose-400 text-rose-900';
+                            else style = 'bg-slate-50 border-slate-200 opacity-55';
+                        }
+                        return `
+                            <button onclick="selectQuizOption('${opt.id}')" ${quizAnswered ? 'disabled' : ''} class="p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer ${style}">
+                                <div class="font-oswald text-lg lg:text-xl font-bold mb-0.5">${opt.label}</div>
+                                <div class="text-xs lg:text-sm font-semibold opacity-80">${opt.desc}</div>
+                            </button>
+                        `;
+                    }).join('')}
+                </div>
+
+                ${quizAnswered ? `
+                    <div class="px-4 py-2.5 rounded-2xl border-2 flex items-center justify-between gap-4 ${
+                        isCorrect ? 'bg-emerald-50 border-emerald-300 text-emerald-950' : 'bg-amber-50 border-amber-300 text-amber-950'
+                    }">
+                        <div class="text-xs sm:text-sm font-bold">
+                            ${isCorrect ? '🌟 ' + q.feedbackCorrect : '🤔 ' + q.feedbackWrong}
+                        </div>
+                        <button onclick="nextQuizStep()" class="font-oswald text-sm lg:text-base font-bold py-2 px-5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white shadow shrink-0 cursor-pointer">
+                            ${quizIndex + 1 < QUIZ_QUESTIONS.length ? 'Следующий вопрос →' : 'Показать результат 🏆'}
+                        </button>
+                    </div>
+                ` : '<div class="text-xs text-slate-400 font-bold text-center">Выбери один из трёх вариантов ответа выше 👆</div>'}
+            `;
+        }
+
+        function selectQuizOption(optId) {
+            if (quizAnswered) return;
+            quizAnswered = true;
+            selectedOptionId = optId;
+            const q = QUIZ_QUESTIONS[quizIndex];
+            if (optId === q.correct) {
+                quizScore++;
+                document.getElementById('quiz-louie-tip').textContent = 'Ура! Абсолютно верно! Мои антенны так и вибрируют от радости!';
+            } else {
+                document.getElementById('quiz-louie-tip').textContent = 'Ничего страшного, на Терра-5 я тоже не сразу запомнил! Посмотри подсказку.';
+            }
+            renderQuiz();
+        }
+
+        function nextQuizStep() {
+            quizIndex++;
+            quizAnswered = false;
+            selectedOptionId = null;
+            renderQuiz();
+        }
+
+        function restartQuiz() {
+            quizIndex = 0;
+            quizScore = 0;
+            quizAnswered = false;
+            selectedOptionId = null;
+            renderQuiz();
+        }
+
+        // Поддержка клавиш клавиатуры (влево/вправо для переключения слайдов)
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+
+        // Старт презентации
+        document.addEventListener('DOMContentLoaded', renderPresentation);
+    </script>
+</body>
+</html>
