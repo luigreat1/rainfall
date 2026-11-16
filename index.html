@@ -24,11 +24,10 @@
             font-family: 'Nunito', sans-serif;
             background: radial-gradient(circle at 50% 15%, #BAE6FD 0%, #7DD3FC 45%, #38BDF8 100%);
             color: #0F172A;
-            body {
-  min-height: 100vh;
-  height: auto;
-  overflow-y: auto;
-}
+            /* Адаптация под iframe: разрешаем прокрутку, если не хватает высоты */
+            min-height: 100vh;
+            height: auto;
+            overflow-y: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -40,11 +39,8 @@
             font-family: 'Oswald', sans-serif;
             letter-spacing: 0.02em;
         }
-        .slide {
-  max-height: none; /* вместо 96vh */
-}
 
-        /* Контейнер 16:9, вписывающийся в любой экран */
+        /* Контейнер 16:9, вписывающийся в любой экран и в iframe */
         .stage-16-9 {
             width: min(97vw, calc(96dvh * 16 / 9));
             height: min(96dvh, calc(97vw * 9 / 16));
@@ -297,7 +293,7 @@
                             <div class="absolute top-1/2 -right-2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[8px] border-l-purple-300"></div>
                         </div>
                         <div id="louie-svg-box" onclick="pokeLouie()" class="louie-float w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 shrink-0 cursor-pointer" title="Нажми на Луи!">
-                            <img src="lui_d.png" alt="Луи" class="w-full h-full object-contain">
+                            <img src="lui_d.png" alt="Луи" class="w-full h-full object-contain" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:2rem;\'>🛸</span>'">
                         </div>
                     </div>
 
@@ -323,7 +319,7 @@
 
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shrink-0">
                 <div class="flex items-center gap-3 bg-purple-50 border-2 border-purple-200 rounded-2xl px-3 sm:px-4 py-2 flex-1">
-                    <img src="lui_d2.png" alt="Луи" class="louie-jump w-12 h-12 sm:w-14 sm:h-14 shrink-0">
+                    <img src="lui_d2.png" alt="Луи" class="louie-jump w-12 h-12 sm:w-14 sm:h-14 shrink-0" onerror="this.style.display='none'">
                     <div>
                         <div class="text-[10px] font-oswald uppercase text-purple-700 font-bold">Совет от Луи:</div>
                         <p id="quiz-louie-tip" class="text-[11px] sm:text-xs lg:text-sm font-bold text-slate-800">Вспомни все три облака: тёплое дождевое, морозное снежное и бурную грозовую тучу!</p>
