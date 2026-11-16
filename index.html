@@ -24,9 +24,11 @@
             font-family: 'Nunito', sans-serif;
             background: radial-gradient(circle at 50% 15%, #BAE6FD 0%, #7DD3FC 45%, #38BDF8 100%);
             color: #0F172A;
-            height: 100dvh;
-            width: 100vw;
-            overflow: hidden;
+            body {
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto;
+}
             display: flex;
             align-items: center;
             justify-content: center;
@@ -38,6 +40,9 @@
             font-family: 'Oswald', sans-serif;
             letter-spacing: 0.02em;
         }
+        .slide {
+  max-height: none; /* вместо 96vh */
+}
 
         /* Контейнер 16:9, вписывающийся в любой экран */
         .stage-16-9 {
